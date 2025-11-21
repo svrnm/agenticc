@@ -1,0 +1,67 @@
+project_name: agenticc
+
+builds:
+  - id: agenticc
+    main: ./cmd/agenticc
+    binary: agenticc
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+
+archives:
+  - format: tar.gz
+    name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    files:
+      - README.md
+      - LICENSE
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+
+release:
+  mode: replace
+  header: |
+    ## 🚀 Release {{ .Tag }}
+    
+    An agentic C compiler that agentically compiles agentic applications.
+  footer: |
+    ## 📦 Installation
+    
+    Download the appropriate binary for your platform and extract it.
+    
+    For Linux/macOS:
+    ```bash
+    tar -xzf agenticc_{{ .Os }}_{{ .Arch }}.tar.gz
+    ```
+    
+    For Windows:
+    ```powershell
+    Expand-Archive agenticc_windows_{{ .Arch }}.zip
+    ```
+    
+    ## 📄 License
+    
+    Licensed under the Apache License 2.0.
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+
