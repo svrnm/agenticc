@@ -1,0 +1,8 @@
+examples/
+.git/
+*.c
+*.out
+hello
+test_*
+agenticc
+
