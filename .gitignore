@@ -50,3 +50,5 @@ fibonacci.exe
 .DS_Store
 Thumbs.db
 
+# Build artifacts
+dist/
