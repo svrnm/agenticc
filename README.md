@@ -40,7 +40,51 @@ As you might expect agenticc is superior to traditional non-AI-powered compilers
 
 ## 📥 Installation
 
-To install and use agenticc run the following commands:
+### Download Pre-built Binaries (Recommended)
+
+Download the latest release for your operating system and architecture from the [Releases page](https://github.com/svrnm/agenticc/releases/latest):
+
+**Linux:**
+```bash
+# AMD64
+wget https://github.com/svrnm/agenticc/releases/latest/download/agenticc_linux_amd64.tar.gz
+tar -xzf agenticc_linux_amd64.tar.gz
+sudo mv agenticc /usr/local/bin/
+
+# ARM64
+wget https://github.com/svrnm/agenticc/releases/latest/download/agenticc_linux_arm64.tar.gz
+tar -xzf agenticc_linux_arm64.tar.gz
+sudo mv agenticc /usr/local/bin/
+```
+
+**macOS:**
+```bash
+# AMD64 (Intel)
+wget https://github.com/svrnm/agenticc/releases/latest/download/agenticc_darwin_amd64.tar.gz
+tar -xzf agenticc_darwin_amd64.tar.gz
+sudo mv agenticc /usr/local/bin/
+
+# ARM64 (Apple Silicon)
+wget https://github.com/svrnm/agenticc/releases/latest/download/agenticc_darwin_arm64.tar.gz
+tar -xzf agenticc_darwin_arm64.tar.gz
+sudo mv agenticc /usr/local/bin/
+```
+
+**Windows:**
+```powershell
+# AMD64
+Invoke-WebRequest -Uri https://github.com/svrnm/agenticc/releases/latest/download/agenticc_windows_amd64.zip -OutFile agenticc_windows_amd64.zip
+Expand-Archive agenticc_windows_amd64.zip
+# Move agenticc.exe to a directory in your PATH
+
+# ARM64
+Invoke-WebRequest -Uri https://github.com/svrnm/agenticc/releases/latest/download/agenticc_windows_arm64.zip -OutFile agenticc_windows_arm64.zip
+Expand-Archive agenticc_windows_arm64.zip
+```
+
+### Build from Source
+
+To build from source, you'll need Go 1.22 or later:
 
 ```bash
 git clone https://github.com/svrnm/agenticc.git

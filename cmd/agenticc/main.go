@@ -53,6 +53,9 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Print initial agentic compilation message
+	fmt.Printf("🤖 Agentically compiling %s\n", inputFile)
+
 	// Build the base binary with the actual code embedded
 	baseBinaryPath, err := buildBaseBinaryWithCode(string(cCode), *model)
 	if err != nil {
@@ -73,7 +76,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("Successfully compiled %s -> %s\n", inputFile, *outputFile)
+	fmt.Printf("✅ Successfully agentically compiled %s — %s\n", inputFile, *outputFile)
 }
 
 func buildBaseBinaryWithCode(cCode string, modelName string) (string, error) {
@@ -120,6 +123,11 @@ func buildBaseBinaryWithCode(cCode string, modelName string) (string, error) {
 			lines[i] = indent + strings.TrimSpace(modelReplacement)
 			modelReplaced = true
 		}
+	}
+
+	// Print message when placeholders are being replaced
+	if codeReplaced && modelReplaced {
+		fmt.Println("🔗 Linking agents...")
 	}
 
 	// Verify replacements happened
