@@ -49,12 +49,15 @@ release:
     
     For Linux/macOS:
     ```bash
-    tar -xzf agenticc_{{ .Os }}_{{ .Arch }}.tar.gz
+    tar -xzf agenticc_linux_amd64.tar.gz
+    # or for ARM64: tar -xzf agenticc_linux_arm64.tar.gz
+    # or for macOS: tar -xzf agenticc_darwin_amd64.tar.gz
     ```
     
     For Windows:
     ```powershell
-    Expand-Archive agenticc_windows_{{ .Arch }}.zip
+    Expand-Archive agenticc_windows_amd64.zip
+    # or for ARM64: Expand-Archive agenticc_windows_arm64.zip
     ```
     
     ## 📄 License
