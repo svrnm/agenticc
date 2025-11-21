@@ -22,6 +22,16 @@ jobs:
         with:
           go-version: '1.22'
 
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Verify project structure
+        run: |
+          pwd
+          ls -la
+          ls -la cmd/agenticc/
+          test -f cmd/agenticc/main.go && echo "main.go exists" || echo "main.go NOT FOUND"
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:

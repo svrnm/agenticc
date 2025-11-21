@@ -4,6 +4,7 @@ project_name: agenticc
 
 builds:
   - id: agenticc
+    dir: .
     main: ./cmd/agenticc
     binary: agenticc
     goos:
