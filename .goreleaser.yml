@@ -1,3 +1,5 @@
+version: 2
+
 project_name: agenticc
 
 builds:
@@ -17,14 +19,18 @@ builds:
       - -s -w
 
 archives:
-  - format: tar.gz
+  - id: default
+    formats:
+      - tar.gz
+      - zip
     name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
     files:
       - README.md
       - LICENSE
     format_overrides:
       - goos: windows
-        format: zip
+        formats:
+          - zip
 
 checksum:
   name_template: 'checksums.txt'
@@ -54,9 +60,6 @@ release:
     
     Licensed under the Apache License 2.0.
 
-snapshot:
-  name_template: "{{ .Tag }}-next"
-
 changelog:
   sort: asc
   filters:
@@ -64,4 +67,3 @@ changelog:
       - '^docs:'
       - '^test:'
       - '^chore:'
-
