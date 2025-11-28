@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	_ "embed"
-	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -19,14 +18,51 @@ const (
 )
 
 func main() {
-	var (
-		outputFile = flag.String("o", "", "Output binary name (required)")
-		model      = flag.String("m", "gpt-4", "OpenAI model to use")
-	)
-	flag.Parse()
+	// Normalize em dashes to regular hyphens in arguments
+	normalizeArgs()
 
-	if flag.NArg() == 0 {
-		fmt.Fprintf(os.Stderr, "Usage: %s [options] <input.c>\n", os.Args[0])
+	// Manually parse all arguments to support flags before and after the input file
+	var (
+		outputFile = ""
+		model      = "gpt-4"
+		inputFile  = ""
+	)
+
+	// Parse all arguments
+	for i := 1; i < len(os.Args); i++ {
+		arg := os.Args[i]
+
+		// Check if it's a flag
+		if strings.HasPrefix(arg, "-") {
+			// Handle -o flag
+			if arg == "-o" {
+				if i+1 < len(os.Args) {
+					outputFile = os.Args[i+1]
+					i++ // Skip the value
+				}
+			} else if strings.HasPrefix(arg, "-o=") {
+				// Handle -o=value format
+				outputFile = strings.TrimPrefix(arg, "-o=")
+			} else if arg == "-m" {
+				// Handle -m flag
+				if i+1 < len(os.Args) {
+					model = os.Args[i+1]
+					i++ // Skip the value
+				}
+			} else if strings.HasPrefix(arg, "-m=") {
+				// Handle -m=value format
+				model = strings.TrimPrefix(arg, "-m=")
+			}
+		} else {
+			// Not a flag, must be the input file
+			if inputFile == "" {
+				inputFile = arg
+			}
+		}
+	}
+
+	if inputFile == "" {
+		fmt.Fprintf(os.Stderr, "Usage: %s [options] <input.c> [options]\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "  -o string\n")
 		fmt.Fprintf(os.Stderr, "    \tOutput binary name (default: input filename without .c extension)\n")
 		fmt.Fprintf(os.Stderr, "  -m string\n")
@@ -34,15 +70,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	inputFile := flag.Arg(0)
-
 	// If no output file specified, derive it from input file
-	if *outputFile == "" {
+	if outputFile == "" {
 		// Remove .c extension if present, otherwise use input filename
 		if strings.HasSuffix(inputFile, ".c") {
-			*outputFile = strings.TrimSuffix(inputFile, ".c")
+			outputFile = strings.TrimSuffix(inputFile, ".c")
 		} else {
-			*outputFile = inputFile
+			outputFile = inputFile
 		}
 	}
 
@@ -57,7 +91,7 @@ func main() {
 	fmt.Printf("🤖 Agentically compiling %s\n", inputFile)
 
 	// Build the base binary with the actual code embedded
-	baseBinaryPath, err := buildBaseBinaryWithCode(string(cCode), *model)
+	baseBinaryPath, err := buildBaseBinaryWithCode(string(cCode), model)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error building base binary: %v\n", err)
 		os.Exit(1)
@@ -71,12 +105,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := os.WriteFile(*outputFile, baseBinary, 0755); err != nil {
+	if err := os.WriteFile(outputFile, baseBinary, 0755); err != nil {
 		fmt.Fprintf(os.Stderr, "Error writing output file: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Printf("✅ Successfully agentically compiled %s — %s\n", inputFile, *outputFile)
+	fmt.Printf("✅ Successfully agentically compiled %s — %s\n", inputFile, outputFile)
 }
 
 func buildBaseBinaryWithCode(cCode string, modelName string) (string, error) {
@@ -278,4 +312,16 @@ func readBaseSource() (string, error) {
 	}
 
 	return "", fmt.Errorf("could not find base source code in any of the expected locations")
+}
+
+// normalizeArgs replaces em dashes (—) with regular hyphens (-) in command-line arguments
+// This allows users to use —o and —m instead of -o and -m
+func normalizeArgs() {
+	for i, arg := range os.Args {
+		// Only process arguments that start with an em dash (Unicode character)
+		if strings.HasPrefix(arg, "—") {
+			// Replace em dash with regular hyphen
+			os.Args[i] = "-" + strings.TrimPrefix(arg, "—")
+		}
+	}
 }

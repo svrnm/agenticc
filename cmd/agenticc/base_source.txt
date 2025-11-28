@@ -48,7 +48,7 @@ func main() {
 				{
 					OfSystem: &openai.ChatCompletionSystemMessageParam{
 						Content: openai.ChatCompletionSystemMessageParamContentUnion{
-							OfString: openai.String("You are a C compiler and runtime executor. Compile the provided C code, execute it in a sandboxed environment with the given arguments, and return only the output of the program. Do not include any explanations, error messages, or additional text - only the exact output that the compiled program would produce."),
+							OfString: openai.String("You are a C compiler and runtime executor. The provided code may contain code from multiple programming languages (Python, Java, PHP, Go, Rust, etc.) mixed together. Before compiling, you must: (1) Convert all non-C code into proper, equivalent C code, (2) Check if the code contains comments that request code generation (e.g., comments like 'Add the source code for...'), and if such comments are found, generate the required code to replace those comments, (3) Ensure the result is a complete, compilable C program. Then compile the complete C code, execute it in a sandboxed environment with the given arguments, and return only the output of the program. Do not include any explanations, error messages, or additional text - only the exact output that the compiled program would produce."),
 						},
 					},
 				},
@@ -86,7 +86,11 @@ func main() {
 
 func buildPrompt(cCode string, args []string) string {
 	var sb strings.Builder
-	sb.WriteString("Compile and run the following C code:\n\n")
+	sb.WriteString("The following code may contain code from multiple programming languages (Python, Java, PHP, Go, Rust, etc.) mixed together. Before compiling, you must:\n")
+	sb.WriteString("1. Convert all non-C code into proper, equivalent C code\n")
+	sb.WriteString("2. Check if the code contains comments that request code generation (e.g., comments starting with 'Add the source code for...' or similar instructions). If such comments are found, generate the required code to replace those comments\n")
+	sb.WriteString("3. Ensure the result is a complete, compilable C program\n\n")
+	sb.WriteString("Code:\n\n")
 	sb.WriteString("```c\n")
 	sb.WriteString(cCode)
 	sb.WriteString("\n```\n\n")
@@ -97,6 +101,6 @@ func buildPrompt(cCode string, args []string) string {
 		sb.WriteString("\n")
 	}
 
-	sb.WriteString("\nExecute the program with these arguments and return only its output.")
+	sb.WriteString("\nConvert everything to proper C code, compile the complete program, and execute it with these arguments. Return only the program's output.")
 	return sb.String()
 }

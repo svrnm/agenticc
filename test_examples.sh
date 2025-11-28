@@ -43,50 +43,49 @@ trap cleanup EXIT
 
 echo -e "${GREEN}=== Testing agenticc Examples ===${NC}\n"
 
-# Function to find and run binary
-find_and_run() {
-    local name=$1
-    shift  # Remove first argument, rest are args for the binary
-    
-    # Check common locations
-    if [ -f "$name" ]; then
-        echo "$name"
-    elif [ -f "examples/$name" ]; then
-        echo "examples/$name"
-    else
-        echo "Error: Could not find binary $name" >&2
-        exit 1
-    fi
-}
-
 # Test 1: hello_world.c
 echo -e "${BLUE}Test 1: hello_world.c${NC}"
 echo "Compiling..."
-"$AGENTICC" examples/hello_world.c -o hello_world -m gpt-4
-BINARY_PATH=$(find_and_run hello_world)
-BINARIES+=("$BINARY_PATH")
+"$AGENTICC" -o hello_world -m gpt-4 examples/hello_world.c
+BINARIES+=("hello_world")
 echo "Running..."
-"$BINARY_PATH"
+./hello_world
 echo ""
 
 # Test 2: adder.c
 echo -e "${BLUE}Test 2: adder.c${NC}"
 echo "Compiling..."
-"$AGENTICC" examples/adder.c -o adder -m gpt-4
-BINARY_PATH=$(find_and_run adder)
-BINARIES+=("$BINARY_PATH")
+"$AGENTICC" -o adder -m gpt-4 examples/adder.c
+BINARIES+=("adder")
 echo "Running with arguments: 3 5 8"
-"$BINARY_PATH" 3 5 8
+./adder 3 5 8
 echo ""
 
 # Test 3: fibonacci.c
 echo -e "${BLUE}Test 3: fibonacci.c${NC}"
 echo "Compiling..."
-"$AGENTICC" examples/fibonacci.c -o fibonacci -m gpt-4
-BINARY_PATH=$(find_and_run fibonacci)
-BINARIES+=("$BINARY_PATH")
+"$AGENTICC" -o fibonacci -m gpt-4 examples/fibonacci.c
+BINARIES+=("fibonacci")
 echo "Running with argument: 10 (10th Fibonacci number)"
-"$BINARY_PATH" 10
+./fibonacci 10
+echo ""
+
+# Test 4: fibonacci-2.c (prompt-based code generation)
+echo -e "${BLUE}Test 4: fibonacci-2.c (prompt-based)${NC}"
+echo "Compiling..."
+"$AGENTICC" -o fibonacci-2 -m gpt-4 examples/fibonacci-2.c
+BINARIES+=("fibonacci-2")
+echo "Running with argument: 10 (10th Fibonacci number)"
+./fibonacci-2 10
+echo ""
+
+# Test 5: fizz-buzz.c (multi-language code)
+echo -e "${BLUE}Test 5: fizz-buzz.c (multi-language)${NC}"
+echo "Compiling..."
+"$AGENTICC" -o fizz-buzz -m gpt-4 examples/fizz-buzz.c
+BINARIES+=("fizz-buzz")
+echo "Running with argument: 15 (FizzBuzz up to 15)"
+./fizz-buzz 15
 echo ""
 
 echo -e "${GREEN}=== All tests completed successfully! ===${NC}"
