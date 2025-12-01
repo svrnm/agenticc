@@ -12,7 +12,7 @@ Instead of traditional compilation, agenticc creates agentic binaries that use A
 Every application that is compiled with agenticc is an AI-powered agentic application, you can use in your agentic workflows!
 
 <div align="center">
-  <img src="agenticc.gif" alt="" width="400">
+  <img src="agenticc.gif" alt="" width="800">
 </div>
 
 ## ✨ Features
