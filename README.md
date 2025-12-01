@@ -2,6 +2,8 @@
 
 ![Go Version](https://img.shields.io/badge/Go-1.22+-00ADD8?style=flat-square&logo=go)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/svrnm/agenticc/badge)](https://scorecard.dev/viewer/?uri=github.com/svrnm/agenticc)
+[![CodeQL](https://github.com/svrnm/agenticc/actions/workflows/codeql.yml/badge.svg)](https://github.com/svrnm/agenticc/actions/workflows/codeql.yml)
 ![Agentic](https://img.shields.io/badge/llm_powered-agents-green?style=flat-square)
 
 **An agentic C compiler that agentically compiles agentic applications.** 🤖✨
