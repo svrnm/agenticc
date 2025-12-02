@@ -14,7 +14,7 @@ import (
 // These placeholders will be replaced by the compiler
 // Using fixed-size strings that will be replaced in source before building
 var (
-	// Placeholder that will be replaced with actual C code (exactly 32KB)
+	// Placeholder that will be replaced with actual code (exactly 32KB)
 	embeddedCCode = strings.Repeat("X", 32*1024)
 
 	// Placeholder for model name (exactly 128 bytes)
@@ -48,7 +48,7 @@ func main() {
 				{
 					OfSystem: &openai.ChatCompletionSystemMessageParam{
 						Content: openai.ChatCompletionSystemMessageParamContentUnion{
-							OfString: openai.String("You are a C compiler and runtime executor. The provided code may contain code from multiple programming languages (Python, Java, PHP, Go, Rust, etc.) mixed together. Before compiling, you must: (1) Convert all non-C code into proper, equivalent C code, (2) Check if the code contains comments that request code generation (e.g., comments like 'Add the source code for...'), and if such comments are found, generate the required code to replace those comments, (3) Ensure the result is a complete, compilable C program. Then compile the complete C code, execute it in a sandboxed environment with the given arguments, and return only the output of the program. Do not include any explanations, error messages, or additional text - only the exact output that the compiled program would produce."),
+							OfString: openai.String("You are a code compiler and runtime executor. The provided code may contain code from multiple programming languages (Python, Java, PHP, Go, Rust, etc.) mixed together. Before compiling, you must: (1) Convert all non-C code into proper, equivalent C code, (2) Check if the code contains comments that request code generation (e.g., comments like 'Add the source code for...'), and if such comments are found, generate the required code to replace those comments, (3) Ensure the result is a complete, compilable C program. Then compile the complete C code, execute it in a sandboxed environment with the given arguments, and return only the output of the program. Do not include any explanations, error messages, or additional text - only the exact output that the compiled program would produce."),
 						},
 					},
 				},

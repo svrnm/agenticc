@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Test script for agenticc examples
-# Compiles, runs, and cleans up example C programs
+# Compiles, runs, and cleans up example programs (C, Fortran, etc.)
 
 set -e  # Exit on error
 
@@ -86,6 +86,15 @@ echo "Compiling..."
 BINARIES+=("fizz-buzz")
 echo "Running with argument: 15 (FizzBuzz up to 15)"
 ./fizz-buzz 15
+echo ""
+
+# Test 6: gcd.f90 (Fortran GCD example)
+echo -e "${BLUE}Test 6: gcd.f90 (Fortran GCD)${NC}"
+echo "Compiling..."
+"$AGENTICC" -o gcd -m gpt-4 examples/gcd.f90
+BINARIES+=("gcd")
+echo "Running with arguments: 48 18 (GCD of 48 and 18)"
+./gcd 48 18
 echo ""
 
 echo -e "${GREEN}=== All tests completed successfully! ===${NC}"

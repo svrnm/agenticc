@@ -13,7 +13,7 @@ import (
 const (
 	codeMarker   = "AGENTICC_CODE_MARKER_START_"
 	modelMarker  = "AGENTICC_MODEL_MARKER_"
-	maxCodeSize  = 32 * 1024 // 32KB should be enough for most C programs
+	maxCodeSize  = 32 * 1024 // 32KB should be enough for most programs
 	maxModelSize = 128       // 128 bytes for model name
 )
 
@@ -62,9 +62,9 @@ func main() {
 	}
 
 	if inputFile == "" {
-		fmt.Fprintf(os.Stderr, "Usage: %s [options] <input.c> [options]\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Usage: %s [options] <input file> [options]\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "  -o string\n")
-		fmt.Fprintf(os.Stderr, "    \tOutput binary name (default: input filename without .c extension)\n")
+		fmt.Fprintf(os.Stderr, "    \tOutput binary name (default: input filename without extension)\n")
 		fmt.Fprintf(os.Stderr, "  -m string\n")
 		fmt.Fprintf(os.Stderr, "    \tOpenAI model to use (default: gpt-4)\n")
 		os.Exit(1)
@@ -72,7 +72,7 @@ func main() {
 
 	// If no output file specified, derive it from input file
 	if outputFile == "" {
-		// Remove .c extension if present, otherwise use input filename
+		// Remove extension if present, otherwise use input filename
 		if strings.HasSuffix(inputFile, ".c") {
 			outputFile = strings.TrimSuffix(inputFile, ".c")
 		} else {
@@ -80,7 +80,7 @@ func main() {
 		}
 	}
 
-	// Read the C source file
+	// Read the source file
 	cCode, err := os.ReadFile(inputFile)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error reading input file: %v\n", err)
@@ -237,7 +237,7 @@ func replacePlaceholders(binary []byte, cCode string, modelName string) []byte {
 
 	// Check if code is too long
 	if len(codeBytes) > maxCodeSize {
-		fmt.Fprintf(os.Stderr, "Warning: C code exceeds %d bytes, truncating\n", maxCodeSize)
+		fmt.Fprintf(os.Stderr, "Warning: Code exceeds %d bytes, truncating\n", maxCodeSize)
 		codeBytes = codeBytes[:maxCodeSize]
 	}
 

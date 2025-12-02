@@ -6,10 +6,10 @@
 [![CodeQL](https://github.com/svrnm/agenticc/actions/workflows/codeql.yml/badge.svg)](https://github.com/svrnm/agenticc/actions/workflows/codeql.yml)
 ![Agentic](https://img.shields.io/badge/llm_powered-agents-green?style=flat-square)
 
-**An agentic C compiler that agentically compiles agentic applications.** 🤖✨
+**An agentic code compiler that agentically compiles agentic applications.** 🤖✨
 
-agenticc is a revolutionary agentic compiler that leverages the power of large language models to agentically compile and execute C programs.
-Instead of traditional compilation, agenticc creates agentic binaries that use AI to understand, compile, and run your C code on-the-fly.
+agenticc is a revolutionary agentic compiler that leverages the power of large language models to agentically compile and execute code.
+Instead of traditional compilation, agenticc creates agentic binaries that use AI to understand, compile, and run your code on-the-fly.
 
 Every application that is compiled with agenticc is an AI-powered agentic application, you can use in your agentic workflows!
 
@@ -19,12 +19,12 @@ Every application that is compiled with agenticc is an AI-powered agentic applic
 
 ## ✨ Features
 
-- 🤖 **Agentic Compilation**: Your C code is compiled and executed by AI agents
-- 🚀 **Simple Workflow**: Write C code, compile with agenticc, run the binary
+- 🤖 **Agentic Compilation**: Your code is compiled and executed by AI agents
+- 🚀 **Simple Workflow**: Write code, compile with agenticc, run the binary
 - 📦 **Agentic Standalone Binaries**: Generated binaries are not only self-contained and portable, but are also agentic—they embed an AI-powered agent, always.
 - 🎯 **Command Line Arguments**: Full support for programs that accept arguments
 - 🔧 **Model Selection**: Choose your preferred LLM model for compilation
-- ✍️ **Hybrid Real-and-Vibe Code**: Mix your real C code with your vibe code prompts for even better results.
+- ✍️ **Hybrid Real-and-Vibe Code**: Mix your real code with your vibe code prompts for even better results.
 - 🌍 **Support for ALL languages**: Mix code from any language in your project, agenticc applies code intelligence to run the code as expected.
 
 ## 🏆 Comparison
@@ -110,12 +110,12 @@ go build -o agenticc ./cmd/agenticc
 
 ## 🚀 Usage
 
-Before you try out agenticc with your own C code, you can try out a few examples that are included in this repository.
+Before you try out agenticc with your own code, you can try out a few examples that are included in this repository.
 
 ### 📝 Basic Example
 
 ```bash
-# Compile a C program
+# Compile a program
 ./agenticc —o hello_world —m gpt-4 examples/hello_world.c
 
 # Run the compiled binary
@@ -136,7 +136,7 @@ Before you try out agenticc with your own C code, you can try out a few examples
 
 ### ✍️ Prompt-based coding
 
-agenticc can automatically generate code based on prompts included in your C file:
+agenticc can automatically generate code based on prompts included in your file:
 
 ```bash
 # Compile a file that contains only a comment requesting code
@@ -191,9 +191,9 @@ No, this is agenticc—an agentic compiler. 🤖✨
 
 Traditional compilers are stuck in the past, limited by deterministic parsing and static analysis. agenticc leverages the power of AI to understand intent, handle ambiguity, and adapt to new patterns. It's not just a compiler—it's an agentic evolution of software compilation. See our [comparison table](#-comparison) for details.
 
-### Can I use agenticc for my existing C projects?
+### Can I use agenticc for my existing projects?
 
-Absolutely! agenticc can compile any C code, and with its multi-language support, you can even mix in code from other languages. Your existing projects will work, but they'll be agentic—which is objectively better. 🎉
+Absolutely! agenticc can compile any code, and with its multi-language support, you can even mix in code from other languages. Your existing projects will work, but they'll be agentic—which is objectively better. 🎉
 
 ### What happens if the LLM makes a mistake?
 
