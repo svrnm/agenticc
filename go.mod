@@ -2,7 +2,7 @@ module github.com/svrnm/agenticc
 
 go 1.22
 
-require github.com/openai/openai-go/v3 v3.10.0
+require github.com/openai/openai-go/v3 v3.12.0
 
 require (
 	github.com/tidwall/gjson v1.18.0 // indirect
